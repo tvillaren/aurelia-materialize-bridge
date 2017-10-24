@@ -27,6 +27,14 @@ export class MaterializeFormValidationRenderer {
         validationContainer = element;
         break;
       }
+      case 'MD-FILE': {
+        const inputField = element.querySelector('.file-path-wrapper');
+        if (inputField) {
+          input = inputField.querySelector('input');
+          validationContainer = inputField;
+        }
+        break;
+      }
       case 'SELECT': {
         const inputField = element.closest('.input-field');
         if (inputField) {
@@ -77,6 +85,21 @@ export class MaterializeFormValidationRenderer {
         }
         break;
       }
+      case 'MD-FILE': {
+        const inputField = element.querySelector('.file-path-wrapper');
+        if (!inputField) {
+          return;
+        }
+        let input = inputField.querySelector('input');
+        if (input) {
+          result.target = input;
+          if (!(input.hasAttribute('data-show-errortext') &&
+              input.getAttribute('data-show-errortext') === 'false')) {
+            this.addMessage(inputField, result);
+          }
+        }
+        break;
+      }
       case 'SELECT': {
         const inputField = element.closest('.input-field');
         if (!inputField) {
@@ -86,7 +109,7 @@ export class MaterializeFormValidationRenderer {
         if (input) {
           result.target = input;
           if (!(input.hasAttribute('data-show-errortext') &&
-                input.getAttribute('data-show-errortext') === 'false')) {
+              input.getAttribute('data-show-errortext') === 'false')) {
             this.addMessage(inputField, result);
           }
         }
@@ -95,7 +118,7 @@ export class MaterializeFormValidationRenderer {
       case 'INPUT' : {
         if (element.hasAttribute('md-datepicker')) {
           if (!(element.hasAttribute('data-show-errortext') &&
-              element.getAttribute('data-show-errortext') === 'false')) {
+            element.getAttribute('data-show-errortext') === 'false')) {
             this.addMessage(element.parentNode, result);
           }
         }
@@ -112,6 +135,15 @@ export class MaterializeFormValidationRenderer {
     switch (element.tagName) {
       case 'MD-INPUT': {
         this.removeMessage(element, result);
+        break;
+      }
+      case 'MD-FILE': {
+        const inputField = element.querySelector('.file-path-wrapper');
+        if (!inputField) {
+          return;
+        }
+
+        this.removeMessage(inputField, result);
         break;
       }
       case 'SELECT': {
@@ -153,5 +185,4 @@ export class MaterializeFormValidationRenderer {
       element.removeChild(message);
     }
   }
-
 }
