@@ -100,12 +100,21 @@ define(['exports'], function (exports) {
             validationContainer = element;
             break;
           }
-        case 'SELECT':
+        case 'MD-FILE':
           {
-            var inputField = element.closest('.input-field');
+            var inputField = element.querySelector('.file-path-wrapper');
             if (inputField) {
               input = inputField.querySelector('input');
               validationContainer = inputField;
+            }
+            break;
+          }
+        case 'SELECT':
+          {
+            var _inputField = element.closest('.input-field');
+            if (_inputField) {
+              input = _inputField.querySelector('input');
+              validationContainer = _inputField;
             }
             break;
           }
@@ -154,9 +163,9 @@ define(['exports'], function (exports) {
             }
             break;
           }
-        case 'SELECT':
+        case 'MD-FILE':
           {
-            var inputField = element.closest('.input-field');
+            var inputField = element.querySelector('.file-path-wrapper');
             if (!inputField) {
               return;
             }
@@ -165,6 +174,21 @@ define(['exports'], function (exports) {
               result.target = _input;
               if (!(_input.hasAttribute('data-show-errortext') && _input.getAttribute('data-show-errortext') === 'false')) {
                 this.addMessage(inputField, result);
+              }
+            }
+            break;
+          }
+        case 'SELECT':
+          {
+            var _inputField2 = element.closest('.input-field');
+            if (!_inputField2) {
+              return;
+            }
+            var _input2 = _inputField2.querySelector('input');
+            if (_input2) {
+              result.target = _input2;
+              if (!(_input2.hasAttribute('data-show-errortext') && _input2.getAttribute('data-show-errortext') === 'false')) {
+                this.addMessage(_inputField2, result);
               }
             }
             break;
@@ -193,14 +217,24 @@ define(['exports'], function (exports) {
             this.removeMessage(element, result);
             break;
           }
-        case 'SELECT':
+        case 'MD-FILE':
           {
-            var inputField = element.closest('.input-field');
+            var inputField = element.querySelector('.file-path-wrapper');
             if (!inputField) {
               return;
             }
 
             this.removeMessage(inputField, result);
+            break;
+          }
+        case 'SELECT':
+          {
+            var _inputField3 = element.closest('.input-field');
+            if (!_inputField3) {
+              return;
+            }
+
+            this.removeMessage(_inputField3, result);
             break;
           }
         case 'INPUT':

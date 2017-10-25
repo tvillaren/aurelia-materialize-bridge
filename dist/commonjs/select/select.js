@@ -251,10 +251,20 @@ var MdSelect = exports.MdSelect = (_dec = (0, _aureliaDependencyInjection.inject
     }
     this.observeVisibleDropdownContent(false);
     this.observeOptions(false);
+    var input = $(this.element).siblings('input');
+    var isValid = input.hasClass('valid');
+    var isInvalid = input.hasClass('invalid');
     if (destroy) {
       $(this.element).material_select('destroy');
     }
     $(this.element).material_select();
+    input = $(this.element).siblings('input');
+    if (isValid) {
+      input.addClass('valid');
+    }
+    if (isInvalid) {
+      input.addClass('invalid');
+    }
     this.toggleControl(this.disabled);
     this.observeVisibleDropdownContent(true);
     this.observeOptions(true);
